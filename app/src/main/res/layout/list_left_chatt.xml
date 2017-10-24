@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/body_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:gravity="right"
+        android:padding="2sp"
+        android:orientation="horizontal">
+
+        <ProgressBar
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="0dp"
+            android:layout_weight="3"
+            android:visibility="invisible"
+            />
+        <TextView
+            android:id="@+id/body_text"
+            android:layout_width="300sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="6"
+            android:background="@drawable/rounded_corner"
+            android:padding="16dp"
+            android:text="Android charting application xml ui design. Android charting application xml ui design tutorial with example. Android charting application xml ui design. Android charting application xml ui design. "
+            android:textColor="#000" />
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginLeft="-15dp"
+            android:visibility="visible"
+            android:src="@drawable/arrow_bg1" />
+
+        <ImageView
+            android:id="@+id/body_img"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="0dp"
+            android:layout_weight="3"
+            android:src="@drawable/double_tick"
+            android:visibility="invisible"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/layout_media"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_gravity="right"
+        android:gravity="right"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:gravity="right"
+            android:id="@+id/image_layout"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5sp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_corner"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/image_size" />
+
+                    <ProgressBar
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="0dp"
+                        android:layout_weight="3"
+                        android:id="@+id/progress_image"
+                        android:visibility="invisible"
+                        />
+                </LinearLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="250sp"
+                        android:layout_height="150sp"
+                        android:layout_gravity="left"
+                        android:layout_weight="1"
+                        android:background="@drawable/bg"
+                        android:id="@+id/imageView_src"
+                        android:adjustViewBounds="true"/>
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:id="@+id/download_img"
+                        android:background="@drawable/rounded_blank"
+                        android:src="@android:drawable/stat_sys_download"/>
+
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/image_text"
+                    android:text="sent date, time"/>
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="0dp"
+                android:visibility="visible"
+                android:layout_marginLeft="-14dp"
+                android:src="@drawable/arrow_bg1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/layout_video"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/rounded_corner"
+                android:padding="5sp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/video_size"
+                        android:text="" />
+                    <ProgressBar
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="0dp"
+                        android:layout_weight="3"
+                        android:id="@+id/progress_video"
+                        android:visibility="invisible"
+                        />
+                </LinearLayout>
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <VideoView
+                            android:layout_width="250sp"
+                            android:layout_height="150sp"
+                            android:id="@+id/videoView"
+                            android:layout_marginTop="10sp"
+                            android:layout_gravity="right"
+                            android:adjustViewBounds="true"/>
+
+                        <ImageButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:id="@+id/download_video"
+                            android:background="@drawable/rounded_blank"
+                            android:src="@android:drawable/stat_sys_download"/>
+                    </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/video_text"
+                    android:text="sent to you"/>
+            </LinearLayout>
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="0dp"
+                android:visibility="visible"
+                android:layout_marginLeft="-5dp"
+                android:src="@drawable/arrow_bg1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:id="@+id/audio_layout"
+            android:background="@drawable/rounded_corner"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5sp"
+                android:layout_gravity="left"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/audio_size" />
+                    <ProgressBar
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_weight="3"
+                        android:id="@+id/progress_audio"
+                        android:visibility="gone"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@color/colorPrimaryDark"
+                    android:orientation="horizontal">
+
+                    <SeekBar
+                        android:layout_width="220sp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/seekBar"
+                        android:layout_weight="1"
+                        android:layout_gravity="center" />
+                    <ImageButton
+                        android:layout_width="40sp"
+                        android:layout_height="30sp"
+                        android:padding="5sp"
+                        android:background="@null"
+                        android:id="@+id/audio_play"
+                        android:src="@android:drawable/presence_audio_away" />
+                    <ImageButton
+                        android:layout_width="40sp"
+                        android:layout_height="30sp"
+                        android:padding="5sp"
+                        android:background="@null"
+                        android:id="@+id/audio_pause_download"
+                        android:src="@android:drawable/ic_media_pause" />
+                    <ImageButton
+                        android:layout_width="40sp"
+                        android:layout_height="30sp"
+                        android:padding="5sp"
+                        android:background="@null"
+                        android:id="@+id/download_audio"
+                        android:src="@android:drawable/stat_sys_download" />
+                </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/audio_text"
+                    android:layout_marginLeft="5sp"
+                    android:text="sent to you"/>
+            </LinearLayout>
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="0dp"
+                android:visibility="visible"
+                android:layout_marginLeft="-5dp"
+                android:src="@drawable/arrow_bg1" />
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
+    </ScrollView>
