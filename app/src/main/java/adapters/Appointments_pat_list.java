@@ -27,6 +27,8 @@ import android.widget.ToggleButton;
 import com.example.john.mobicare_uganda.R;
 import com.example.john.mobicare_uganda.firebase_collections.util.Convert;
 
+import java.util.List;
+
 import connectivity.DBHelper;
 import server_connections.Fetch;
 import server_connections.Updates;
@@ -42,14 +44,14 @@ import static connectivity.Constants.config.UPDATE_APPOINTMENTS_DOCTOR_URL;
 
 public class Appointments_pat_list extends BaseAdapter {
     Context context;
-    String[] date, time,status,body,d,t;
+    List<String> date, time,status,body,d,t;
     LayoutInflater inflter;
-    Integer [] ids;
-    String[] names;
+    List<Integer>  ids;
+    List<String> names;
 
     private static final String TAG = "Appointment_Adapter";
 
-    public Appointments_pat_list(Context applicationContext, String[] names,String[] date, String[] time, String[] status, String[] body, String[] d, String[] t, Integer[] ids) {
+    public Appointments_pat_list(Context applicationContext, List<String> names, List<String> date, List<String> time, List<String> status, List<String> body, List<String> d, List<String> t, List<Integer> ids) {
         this.context = applicationContext;
         this.date = date;
         this.time = time;
@@ -64,7 +66,7 @@ public class Appointments_pat_list extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return date.length;
+        return date.size();
     }
 
     @Override
@@ -91,13 +93,13 @@ public class Appointments_pat_list extends BaseAdapter {
 
         try {
 
-            date_textView.setText(date[i]);
-            time_textView.setText(time[i]);
-            name_textView.setText(names[i]);
+            date_textView.setText(date.get(i));
+            time_textView.setText(time.get(i));
+            name_textView.setText(names.get(i));
 
             //status_textView.setText(status[i]);
 
-            setMessages(body[i], status[i], d[i], t[i],layout);
+            setMessages(body.get(i), status.get(i), d.get(i), t.get(i),layout);
         }catch (Exception e){
             e.printStackTrace();
         }

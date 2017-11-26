@@ -1,5 +1,4 @@
 package com.example.john.mobicare_uganda.chatts;
-import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -11,7 +10,6 @@ import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -32,9 +30,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,22 +43,16 @@ import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.john.mobicare_uganda.MemoryUsage;
+import com.example.john.mobicare_uganda.views.MemoryUsage;
 import com.example.john.mobicare_uganda.R;
 import com.example.john.mobicare_uganda.media.Directory;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URL;
-import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -74,12 +64,12 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import adapters.Chatt_List2;
 import adapters.MyListAdapter;
 import connectivity.Constants;
 import connectivity.DBHelper;
+import connectivity.Get_CurrentDateTime;
 import server_connections.Doctor_Operations;
-import server_connections.Image_Operations;
+import server_connections.Messages_Syncing;
 import server_connections.SMS_Operations;
 import server_connections.Updates;
 import users.User_Details;
@@ -144,7 +134,7 @@ public class Chatts_Tests  extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.c_activity);
+        setContentView(R.layout.c_activity_main);
         MemoryUsage.memory(context);
 
         listView = (ListView) findViewById(R.id.listView);
@@ -175,22 +165,23 @@ public class Chatts_Tests  extends AppCompatActivity {
 
 
 
-        //Toolbar toolbar = (Toolbar)findViewById(R.id.toolBar);
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolBar);
 
-       // TextView textView = (TextView) findViewById(R.id.toolbar_title);
-//        textView.setText(getResources().getString(R.string.app_name));
-      //  TextView textView2 = (TextView) findViewById(R.id.toolbar_subtitle);
-       // ImageView imageView = (ImageView) findViewById(R.id.toolbar_image);
-      //  textView2.setVisibility(View.GONE);
+        TextView textView = (TextView) findViewById(R.id.toolbar_title);
+        textView.setText(getResources().getString(R.string.app_name));
+        TextView textView2 = (TextView) findViewById(R.id.toolbar_subtitle);
+        ImageView imageView = (ImageView) findViewById(R.id.toolbar_image);
+        imageView.setVisibility(View.GONE);
+
         try {
-           // setSupportActionBar(toolbar);
+            setSupportActionBar(toolbar);
             Cursor cursor = new Doctor_Operations(context).selected(doctor_id);
             if (cursor.moveToFirst()){
                 do {
-                   // textView.setText(cursor.getString(cursor.getColumnIndex(Constants.config.WORKER_FNAME))+" "
-                    //        +cursor.getString(cursor.getColumnIndex(Constants.config.WORKER_LNAME)));
+                    textView.setText(cursor.getString(cursor.getColumnIndex(Constants.config.WORKER_FNAME))+" "
+                           +cursor.getString(cursor.getColumnIndex(Constants.config.WORKER_LNAME)));
 
-                    //textView2.setText(phone_number);
+                    textView2.setText(phone_number);
 
                 }while (cursor.moveToNext());
             }
@@ -345,11 +336,15 @@ public class Chatts_Tests  extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // if the result is capturing Image
         int type = 1;
+        String date = new Get_CurrentDateTime().getCurrentDate();
+        String time = new Get_CurrentDateTime().getCurrentTime();
 
         if (requestCode == CAMERA_CAPTURE_IMAGE_REQUEST_CODE) {
+
             if (resultCode == RESULT_OK) {
                 String message = "Image Capture From "+new User_Details(context).getName()+" , "+new User_Details(context).getContact();
-                new Image_Operations(context).upload(fileUri.getPath(),doctor_id,phone_number,message,type);
+                //new Image_Operations(context).upload(fileUri.getPath(),doctor_id,phone_number,message,type);
+                new Messages_Syncing(context).send(date,time,phone_number,message,fileUri.getPath(),Integer.parseInt(doctor_id),Integer.parseInt(category),type);
             } else if (resultCode == RESULT_CANCELED) {
                 // user cancelled Image capture
                 Toast.makeText(getApplicationContext(),
@@ -366,8 +361,8 @@ public class Chatts_Tests  extends AppCompatActivity {
         } else if (requestCode == CAMERA_CAPTURE_VIDEO_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 String message = "Video Capture from "+new User_Details(context).getName()+" , "+new User_Details(context).getContact();
-                new Image_Operations(context).upload(fileUri.getPath(),doctor_id,phone_number,message,type);
-
+                //new Image_Operations(context).upload(fileUri.getPath(),doctor_id,phone_number,message,type);
+                new Messages_Syncing(context).send(date,time,phone_number,message,fileUri.getPath(),Integer.parseInt(doctor_id),Integer.parseInt(category),type);
             } else if (resultCode == RESULT_CANCELED) {
 
                 // user cancelled recording
@@ -387,14 +382,8 @@ public class Chatts_Tests  extends AppCompatActivity {
             @Override
             public void run() {
                 // new CallingNumber(c).clearCalls();
-
                 //progressing_view.setVisibility(View.GONE);
-                Intent intent = new Intent(context, Chatts_Tests.class);
-                intent.putExtra("image",b);
-                intent.putExtra("id",doctor_id);
-                intent.putExtra("category",category);
-                startActivity(intent);
-                finish();
+               selectAll();
             }},300);
     }
 
@@ -485,12 +474,7 @@ public class Chatts_Tests  extends AppCompatActivity {
             //new MyContentObserver();
         }
         if (item.getItemId() == R.id.action_refresh){
-            Intent intent = new Intent(context, Chatts_Tests.class);
-            intent.putExtra("image",b);
-            intent.putExtra("id",doctor_id);
-            intent.putExtra("category",category);
-            startActivity(intent);
-            finish();
+            selectAll();
         }
         if (item.getItemId() == R.id.action_clear){
             int status = 0;
@@ -500,12 +484,7 @@ public class Chatts_Tests  extends AppCompatActivity {
                 public void run() {
                     // new CallingNumber(c).clearCalls();
                     //progressing_view.setVisibility(View.GONE);
-                    Intent intent = new Intent(context, Chatts_Tests.class);
-                    intent.putExtra("image",b);
-                    intent.putExtra("id",doctor_id);
-                    intent.putExtra("category",category);
-                    startActivity(intent);
-                    finish();
+                    selectAll();
                 }},300);
         }
         if (item.getItemId() == R.id.action_recover){
@@ -516,12 +495,7 @@ public class Chatts_Tests  extends AppCompatActivity {
                 public void run() {
                     // new CallingNumber(c).clearCalls();
                     //progressing_view.setVisibility(View.GONE);
-                    Intent intent = new Intent(context, Chatts_Tests.class);
-                    intent.putExtra("image",b);
-                    intent.putExtra("id",doctor_id);
-                    intent.putExtra("category",category);
-                    startActivity(intent);
-                    finish();
+                    selectAll();
                 }},300);
         }
         return super.onOptionsItemSelected(item);
@@ -531,23 +505,23 @@ public class Chatts_Tests  extends AppCompatActivity {
         String message = editText_message.getText().toString().trim();
         //final String doctor_id = new Doctor_Details(context).getDoctor_id();
         SQLiteDatabase db  = new DBHelper(context).getWritableDatabase();
+
+        String date = new Get_CurrentDateTime().getCurrentDate();
+        String time = new Get_CurrentDateTime().getCurrentTime();
+
         List<String> list = new ArrayList<>();
         if (!message.equals("")){
             int type = 1;
             //progressing_view.setVisibility(View.VISIBLE);
-            new SMS_Operations(context).updateMessages(doctor_id,category,message,phone_number,type);
+            //new SMS_Operations(context).updateMessages(doctor_id,category,message,phone_number,type);
+            new Messages_Syncing(context).send(date,time,phone_number,message,"undefined",Integer.parseInt(doctor_id),Integer.parseInt(category),type);
+            //// TODO: 10/24/17  ...!!!!!
+
             editText_message.setText("");
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    // new CallingNumber(c).clearCalls();
-                    //progressing_view.setVisibility(View.GONE);
-                    Intent intent = new Intent(context, Chatts_Tests.class);
-                    intent.putExtra("image",b);
-                    intent.putExtra("id",doctor_id);
-                    intent.putExtra("category",category);
-                    startActivity(intent);
-                    finish();
+                    selectAll();
                 }},300);
         }
     }
@@ -586,66 +560,6 @@ public class Chatts_Tests  extends AppCompatActivity {
 
         }catch (Exception e){
             e.printStackTrace();
-        }
-    }
-
-
-    class DownloadFile extends AsyncTask<String,Integer,Long> {
-        ProgressDialog mProgressDialog = new ProgressDialog(context);// Change Mainactivity.this with your activity name.
-        String strFolderName;
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            mProgressDialog.setMessage("Downloading");
-            mProgressDialog.setIndeterminate(false);
-            mProgressDialog.setMax(100);
-            mProgressDialog.setCancelable(true);
-            mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-            mProgressDialog.show();
-        }
-        @Override
-        protected Long doInBackground(String... aurl) {
-            int count;
-            try {
-                URL url = new URL((String) aurl[0]);
-                URLConnection conexion = url.openConnection();
-                conexion.connect();
-                String sub = aurl[0].substring(aurl[0].lastIndexOf("/"),aurl[0].lastIndexOf("."));
-                String targetFileName = sub+""+".jpg";//Change name and subname
-                int lenghtOfFile = conexion.getContentLength();
-                String PATH = Environment.getExternalStorageDirectory()+ "/MOBICARE/";
-                File folder = new File(PATH);
-                if(!folder.exists()){
-                    folder.mkdir();//If there is no folder it will be created.
-                }
-                File subfolder = new File(Environment.getExternalStorageDirectory()+ "/MOBICARE/images/");
-                if (!subfolder.exists()){
-                    subfolder.mkdir();
-                }
-                InputStream input = new BufferedInputStream(url.openStream());
-                OutputStream output = new FileOutputStream(subfolder+"/"+targetFileName);
-                //OutputStream outputStream = new FileOutputStream()
-                byte data[] = new byte[1024];
-                long total = 0;
-                while ((count = input.read(data)) != -1) {
-                    total += count;
-                    publishProgress ((int)(total*100/lenghtOfFile));
-                    output.write(data, 0, count);
-                }
-                output.flush();
-                output.close();
-                input.close();
-            } catch (Exception e) {}
-            return null;
-        }
-        protected void onProgressUpdate(Integer... progress) {
-            mProgressDialog.setProgress(progress[0]);
-            if(mProgressDialog.getProgress()==mProgressDialog.getMax()){
-                mProgressDialog.dismiss();
-                Toast.makeText(context, "File Downloaded", Toast.LENGTH_SHORT).show();
-            }
-        }
-        protected void onPostExecute(String result) {
         }
     }
     public void showDialog(){
@@ -729,19 +643,16 @@ public class Chatts_Tests  extends AppCompatActivity {
                     int type = 1;
                     String messages = "Voice message by " + new User_Details(context).getName() + " , " + new User_Details(context).getContact();
                     if (!voiceStoragePath.equals("")) {
-                        new Image_Operations(context).upload(voiceStoragePath,doctor_id,phone_number,messages,type);
+                        //new Image_Operations(context).upload(voiceStoragePath,doctor_id,phone_number,messages,type);
+                        String date = new Get_CurrentDateTime().getCurrentDate();
+                        String time = new Get_CurrentDateTime().getCurrentTime();
+
+                        new Messages_Syncing(context).send(date,time,phone_number,messages,voiceStoragePath,Integer.parseInt(doctor_id),Integer.parseInt(category),type);
                         alert.dismiss();
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                // new CallingNumber(c).clearCalls();
-                                //progressing_view.setVisibility(View.GONE);
-                                Intent intent = new Intent(context, Chatts_Tests.class);
-                                intent.putExtra("image",b);
-                                intent.putExtra("id",doctor_id);
-                                intent.putExtra("category",category);
-                                startActivity(intent);
-                                finish();
+                                selectAll();
                             }},300);
                     }else {
                         Toast toast = Toast.makeText(context, "Audio file not found! ", Toast.LENGTH_LONG);

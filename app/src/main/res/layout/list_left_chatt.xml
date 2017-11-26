@@ -14,17 +14,9 @@
         android:padding="2sp"
         android:orientation="horizontal">
 
-        <ProgressBar
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_gravity="bottom"
-            android:layout_marginTop="0dp"
-            android:layout_weight="3"
-            android:visibility="invisible"
-            />
         <TextView
             android:id="@+id/body_text"
-            android:layout_width="300sp"
+            android:layout_width="250sp"
             android:layout_height="wrap_content"
             android:layout_weight="6"
             android:background="@drawable/rounded_corner"
@@ -39,16 +31,45 @@
             android:visibility="visible"
             android:src="@drawable/arrow_bg1" />
 
-        <ImageView
-            android:id="@+id/body_img"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_gravity="bottom"
-            android:layout_marginTop="0dp"
-            android:layout_weight="3"
-            android:src="@drawable/double_tick"
-            android:visibility="invisible"
-            />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            >
+            <ImageView
+                android:id="@+id/body_sync"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="bottom"
+                android:layout_marginTop="0dp"
+                android:layout_weight="3"
+                android:src="@android:drawable/stat_notify_sync_noanim"
+                android:visibility="visible"
+                />
+            <ImageView
+                android:id="@+id/body_single"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="bottom"
+                android:layout_marginTop="0dp"
+                android:layout_weight="3"
+                android:src="@drawable/single_tick"
+                android:visibility="gone"
+                />
+            <ImageView
+                android:id="@+id/body_double"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="bottom"
+                android:layout_marginTop="0dp"
+                android:layout_weight="3"
+                android:src="@drawable/double_tick"
+                android:visibility="gone"
+                />
+
+        </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout
@@ -67,73 +88,122 @@
             android:gravity="right"
             android:id="@+id/image_layout"
             android:orientation="horizontal">
+
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="5sp"
                 android:layout_weight="1"
-                android:background="@drawable/rounded_corner"
-                android:orientation="vertical">
-
+                android:orientation="horizontal">
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:padding="5sp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_corner"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/image_size" />
+
+                        <ProgressBar
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="0dp"
+                            android:layout_weight="3"
+                            android:id="@+id/progress_image"
+                            android:visibility="invisible"
+                            />
+                    </LinearLayout>
+
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="250sp"
+                            android:layout_height="150sp"
+                            android:layout_gravity="left"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg"
+                            android:id="@+id/imageView_src"
+                            android:adjustViewBounds="true"/>
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:id="@+id/download_img"
+                            android:hint="download"
+                            android:background="@drawable/round"
+                            android:drawableLeft="@android:drawable/stat_sys_download"/>
+
+                    </RelativeLayout>
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/image_size" />
-
-                    <ProgressBar
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="0dp"
-                        android:layout_weight="3"
-                        android:id="@+id/progress_image"
-                        android:visibility="invisible"
-                        />
+                        android:id="@+id/image_text"
+                        android:text="sent date, time"/>
                 </LinearLayout>
 
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:layout_width="250sp"
-                        android:layout_height="150sp"
-                        android:layout_gravity="left"
-                        android:layout_weight="1"
-                        android:background="@drawable/bg"
-                        android:id="@+id/imageView_src"
-                        android:adjustViewBounds="true"/>
-
-                    <ImageButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:id="@+id/download_img"
-                        android:background="@drawable/rounded_blank"
-                        android:src="@android:drawable/stat_sys_download"/>
-
-                </RelativeLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/image_text"
-                    android:text="sent date, time"/>
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="0dp"
+                    android:visibility="visible"
+                    android:layout_marginLeft="-14dp"
+                    android:src="@drawable/arrow_bg1" />
             </LinearLayout>
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginTop="0dp"
-                android:visibility="visible"
-                android:layout_marginLeft="-14dp"
-                android:src="@drawable/arrow_bg1" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                >
+                <ImageView
+                    android:id="@+id/image_sync"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="bottom"
+                    android:layout_marginTop="0dp"
+                    android:layout_weight="3"
+                    android:src="@android:drawable/stat_notify_sync_noanim"
+                    android:visibility="visible"
+                    />
+                <ImageView
+                    android:id="@+id/image_single"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="bottom"
+                    android:layout_marginTop="0dp"
+                    android:layout_weight="3"
+                    android:src="@drawable/single_tick"
+                    android:visibility="gone"
+                    />
+                <ImageView
+                    android:id="@+id/image_double"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="bottom"
+                    android:layout_marginTop="0dp"
+                    android:layout_weight="3"
+                    android:src="@drawable/double_tick"
+                    android:visibility="gone"
+                    />
+
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -180,13 +250,24 @@
                             android:layout_gravity="right"
                             android:adjustViewBounds="true"/>
 
-                        <ImageButton
+                        <Button
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
                             android:id="@+id/download_video"
-                            android:background="@drawable/rounded_blank"
-                            android:src="@android:drawable/stat_sys_download"/>
+                            android:visibility="gone"
+                            android:hint="download"
+                            android:background="@drawable/round"
+                            android:drawableLeft="@android:drawable/stat_sys_download"/>
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:id="@+id/play_video"
+                            android:hint="play"
+                            android:background="@drawable/round_null"
+                            android:drawableLeft="@android:drawable/ic_media_play"/>
                     </RelativeLayout>
                 <TextView
                     android:layout_width="wrap_content"
@@ -201,6 +282,48 @@
                 android:visibility="visible"
                 android:layout_marginLeft="-5dp"
                 android:src="@drawable/arrow_bg1" />
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                >
+                <ImageView
+                    android:id="@+id/video_sync"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="bottom"
+                    android:layout_marginTop="0dp"
+                    android:layout_weight="3"
+                    android:src="@android:drawable/stat_notify_sync_noanim"
+                    android:visibility="visible"
+                    />
+                <ImageView
+                    android:id="@+id/video_single"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="bottom"
+                    android:layout_marginTop="0dp"
+                    android:layout_weight="3"
+                    android:src="@drawable/single_tick"
+                    android:visibility="gone"
+                    />
+                <ImageView
+                    android:id="@+id/video_double"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="bottom"
+                    android:layout_marginTop="0dp"
+                    android:layout_weight="3"
+                    android:src="@drawable/double_tick"
+                    android:visibility="gone"
+                    />
+
+            </LinearLayout>
+
+
         </LinearLayout>
 
         <LinearLayout
@@ -208,14 +331,17 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:id="@+id/audio_layout"
-            android:background="@drawable/rounded_corner"
             android:orientation="horizontal">
-
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal">
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5sp"
-                android:layout_gravity="left"
+                android:background="@drawable/rounded_corner"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -287,7 +413,52 @@
                 android:layout_marginLeft="-5dp"
                 android:src="@drawable/arrow_bg1" />
 
+
+                </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="right"
+                android:orientation="vertical"
+                >
+                <ImageView
+                    android:id="@+id/audio_sync"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="bottom"
+                    android:layout_marginTop="0dp"
+                    android:layout_weight="3"
+                    android:src="@android:drawable/stat_notify_sync_noanim"
+                    android:visibility="visible"
+                    />
+
+                <ImageView
+                    android:id="@+id/audio_single"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="bottom"
+                    android:layout_marginTop="0dp"
+                    android:layout_weight="3"
+                    android:src="@drawable/single_tick"
+                    android:visibility="gone"
+                    />
+                <ImageView
+                    android:id="@+id/audio_double"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="bottom"
+                    android:layout_marginTop="0dp"
+                    android:layout_weight="3"
+                    android:src="@drawable/double_tick"
+                    android:visibility="gone"
+                    />
+
+            </LinearLayout>
+
         </LinearLayout>
+
     </LinearLayout>
 </LinearLayout>
     </ScrollView>

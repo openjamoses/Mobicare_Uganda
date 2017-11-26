@@ -47,10 +47,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.john.mobicare_uganda.PatientChatts;
+import com.example.john.mobicare_uganda.views.PatientChatts;
 import com.example.john.mobicare_uganda.R;
 import com.example.john.mobicare_uganda.media.Directory;
-import com.example.john.mobicare_uganda.messageme.models.Message;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -76,7 +75,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import adapters.Chatt_List2;
-import adapters.MyListAdapter;
 import connectivity.Constants;
 import connectivity.DBHelper;
 import server_connections.Doctor_Operations;

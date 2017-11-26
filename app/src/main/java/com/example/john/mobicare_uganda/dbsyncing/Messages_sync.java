@@ -13,6 +13,7 @@ import java.util.HashMap;
 
 import connectivity.Constants;
 import connectivity.DBHelper;
+import server_connections.Image_Operations;
 
 import static connectivity.Constants.config.CALL_DATE;
 import static connectivity.Constants.config.CALL_DURATION;
@@ -36,6 +37,7 @@ import static connectivity.Constants.config.WORKER_ID;
 public class Messages_sync {
     private Context context;
     private static final String TAG = "Calls_sync";
+    private static final String undefined = "undefined";
     public Messages_sync(Context context){
         this.context = context;
     }
@@ -69,7 +71,9 @@ public class Messages_sync {
         ArrayList<HashMap<String, String>> wordList;
         wordList = new ArrayList<HashMap<String, String>>();
         int status = 0;
-        String selectQuery = "SELECT  * FROM " + Constants.config.TABLE_SMS + " WHERE " + FETCH_STATUS + " = '" + status + "' ";
+        String empty = "";
+        String selectQuery = "SELECT  * FROM " + Constants.config.TABLE_SMS + " WHERE " + FETCH_STATUS + " = '" + status + "'" +
+                " AND "+SMS_PATH+" != '"+undefined+"' ";
         SQLiteDatabase database = new DBHelper(context).getReadableDatabase();
 
         Cursor cursor = database.rawQuery(selectQuery, null);
@@ -114,7 +118,9 @@ public class Messages_sync {
         SQLiteDatabase database = null;
         try {
             int status = 0;
-            String selectQuery = "SELECT  * FROM " + Constants.config.TABLE_SMS + " WHERE " + FETCH_STATUS + " = '" + status + "' ";
+            String empty = "undefined";
+            String selectQuery = "SELECT  * FROM " + Constants.config.TABLE_SMS + " WHERE " + FETCH_STATUS + " = '" + status + "'" +
+                    " AND "+SMS_PATH+" != '"+undefined+"' ";
             database = new DBHelper(context).getReadableDatabase();
             Cursor cursor = database.rawQuery(selectQuery, null);
             count = cursor.getCount();
@@ -138,6 +144,7 @@ public class Messages_sync {
     public void updateSyncStatus(int id, int status){
         SQLiteDatabase database = null;
         try {
+            Log.e(TAG,"Updated ID: "+id+" , Status: "+status);
             database = new DBHelper(context).getWritableDatabase();
             String updateQuery = "UPDATE " + Constants.config.TABLE_SMS + " SET " + FETCH_STATUS + " = '" + status + "' where " + SMS_ID + "='" + id + "'  ";
             Log.d("query", updateQuery);
@@ -150,6 +157,25 @@ public class Messages_sync {
             }catch (Exception e){
                 e.printStackTrace();
             }
+        }
+    }
+
+
+    public void selectFiles(){
+        int status = 0;
+        String selectQuery = "SELECT  * FROM " + Constants.config.TABLE_SMS + " WHERE " + FETCH_STATUS + " = '" + status + "'" +
+                " AND "+SMS_PATH+" != '"+undefined+"' ";
+
+        SQLiteDatabase database = new DBHelper(context).getReadableDatabase();
+        Cursor cursor = database.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
+            do {
+                ///// TODO: 10/24/17  uploads ......!!!
+                new Image_Operations(context).uploads(
+                        cursor.getString(cursor.getColumnIndex(SMS_PATH)),cursor.getInt(cursor.getColumnIndex(SMS_ID)),
+                        cursor.getInt(cursor.getColumnIndex(WORKER_ID)),cursor.getString(cursor.getColumnIndex(PHONE)),
+                        cursor.getString(cursor.getColumnIndex(SMS_BODY)),cursor.getInt(cursor.getColumnIndex(SMS_TYPE)));
+            } while (cursor.moveToNext());
         }
     }
 

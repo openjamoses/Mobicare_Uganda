@@ -23,6 +23,7 @@ import android.os.Looper;
 import android.os.ParcelFileDescriptor;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.res.ResourcesCompat;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -129,6 +130,9 @@ public class C_Adapter_Final extends ArrayAdapter<String> {
                 view=inflater.inflate(R.layout.list_right_chatt, null,true);
             }
         }
+        if (view != null) {
+            view.clearFocus();
+        }
         try {
             preferenceManager
                     = PreferenceManager.getDefaultSharedPreferences(context);
@@ -138,24 +142,40 @@ public class C_Adapter_Final extends ArrayAdapter<String> {
             //// TODO: 10/23/17  body
             LinearLayout body_layout = (LinearLayout) view.findViewById(R.id.body_layout);
             TextView body_text = (TextView) view.findViewById(R.id.body_text);
-            ImageView body_img = (ImageView) view.findViewById(R.id.body_img);
+            ImageView body_sync = (ImageView) view.findViewById(R.id.body_sync);
+            ImageView body_single = (ImageView) view.findViewById(R.id.body_single);
+            ImageView body_double = (ImageView) view.findViewById(R.id.body_double);
+
+
+
             //// TODO: 10/23/17  images
             LinearLayout layout_media = (LinearLayout) view.findViewById(R.id.layout_media);
             LinearLayout image_layout = (LinearLayout) view.findViewById(R.id.image_layout);
             ProgressBar progress_img = (ProgressBar) view.findViewById(R.id.progress_image);
             ImageView imageView_src = (ImageView) view.findViewById(R.id.imageView_src);
-            ImageButton download_img = (ImageButton) view.findViewById(R.id.download_img);
+            Button download_img = (Button) view.findViewById(R.id.download_img);
             TextView image_text = (TextView) view.findViewById(R.id.image_text);
             TextView image_size = (TextView) view.findViewById(R.id.image_size);
+
+            ImageView image_sync = (ImageView) view.findViewById(R.id.image_sync);
+            ImageView image_single = (ImageView) view.findViewById(R.id.image_single);
+            ImageView image_double = (ImageView) view.findViewById(R.id.image_double);
 
 
             //// TODO: 10/23/17  Videos...!!!!
             LinearLayout layout_video = (LinearLayout) view.findViewById(R.id.layout_video);
             ProgressBar progress_video = (ProgressBar) view.findViewById(R.id.progress_video);
             VideoView videoView = (VideoView) view.findViewById(R.id.videoView);
-            ImageButton download_video = (ImageButton) view.findViewById(R.id.download_video);
+            Button download_video = (Button) view.findViewById(R.id.download_video);
+            Button play_video = (Button) view.findViewById(R.id.play_video);
+
             TextView video_text = (TextView) view.findViewById(R.id.video_text);
             TextView video_size = (TextView) view.findViewById(R.id.video_size);
+
+            ImageView video_sync = (ImageView) view.findViewById(R.id.video_sync);
+            ImageView video_single = (ImageView) view.findViewById(R.id.video_single);
+            ImageView video_double = (ImageView) view.findViewById(R.id.video_double);
+
             //// TODO: 10/23/17  Aduo...!!!
             LinearLayout audio_layout = (LinearLayout) view.findViewById(R.id.audio_layout);
             ProgressBar progress_audio = (ProgressBar) view.findViewById(R.id.progress_audio);
@@ -166,6 +186,10 @@ public class C_Adapter_Final extends ArrayAdapter<String> {
             TextView audio_text = (TextView) view.findViewById(R.id.audio_text);
             TextView audio_size = (TextView) view.findViewById(R.id.audio_size);
 
+            ImageView audio_sync = (ImageView) view.findViewById(R.id.audio_sync);
+            ImageView audio_single = (ImageView) view.findViewById(R.id.audio_single);
+            ImageView audio_double = (ImageView) view.findViewById(R.id.audio_double);
+
             Drawable vectorDrawable = ResourcesCompat.getDrawable(context.getResources(), R.drawable.profile2, null);
             Bitmap bitmap3 = ((BitmapDrawable) vectorDrawable).getBitmap();
 
@@ -174,18 +198,23 @@ public class C_Adapter_Final extends ArrayAdapter<String> {
             wordTwo.setSpan(new ForegroundColorSpan(context.getResources().getColor(R.color.colorAccent)), 0, wordTwo.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
             String f = "";
+            int flag = 0;
             if (!url.get(i).equals("undefined")) {
                 String[] splits = url.get(i).split("/");
 
                 if (splits.length == 10) {
                     f = splits[9];
                     Log.e("EXTENSION:", "Extension = " + splits[9].substring(splits[9].length() - 3, splits[9].length()));
+
+                }else if (splits.length == 6){
+                    f = splits[5];
+                    flag = 1;
                 }
                 Log.e("Chatt_List2", message.get(i) + " \t " + lg.get(i) + " \t " + url.get(i));
             }
-            String f_n = "";
+           // String f_n = "";
             if (url.get(i) != null && url.get(i).length() > 4 && Patterns.WEB_URL.matcher(url.get(i)).matches()) {
-                f_n = url.get(i).substring(url.get(i).lastIndexOf("/" + 1, url.get(i).length()));
+              //  f_n = url.get(i).substring(url.get(i).lastIndexOf("/" + 1, url.get(i).length()));
             }
             // External sdcard location
             String PATH = Environment.getExternalStorageDirectory() + "/" + APP_FOLDER + "/";
@@ -207,33 +236,46 @@ public class C_Adapter_Final extends ArrayAdapter<String> {
             }
             if (!f.equals("")) {
                 String tag = f.split("_")[0];
-
                 File file1 = new File(file_image + "/" + f);
-                if (tag.equals("IMG")) {
-                    setImage(imageView_src, f, file_image, url.get(i),download_img,image_size,progress_img);
-                    layout_video.setVisibility(View.GONE);
-                    audio_layout.setVisibility(View.GONE);
-
-                } else if (tag.equals("VID")) {
-                    setVideo(layout_video,videoView, f, file_video, url.get(i),download_video,video_size,progress_video);
-                    image_layout.setVisibility(View.GONE);
-                    audio_layout.setVisibility(View.GONE);
-                } else {
-
-                    setAudio(audio_play, audio_pause_download, seekBar, f, file_audio, url.get(i),audio_size,progress_audio,download_audio);
-                    layout_video.setVisibility(View.GONE);
-                    image_layout.setVisibility(View.GONE);
+                if (flag == 0) {
+                    if (tag.equals("IMG")) {
+                        setImage(imageView_src, f, file_image, url.get(i), download_img, image_size, progress_img);
+                        layout_video.setVisibility(View.GONE);
+                        audio_layout.setVisibility(View.GONE);
+                    } else if (tag.equals("VID")) {
+                        setVideo(layout_video, videoView, f, file_video, url.get(i), download_video, video_size, progress_video,play_video);
+                        image_layout.setVisibility(View.GONE);
+                        audio_layout.setVisibility(View.GONE);
+                    } else {
+                        setAudio(audio_play, audio_pause_download, seekBar, f, file_audio, url.get(i), audio_size, progress_audio, download_audio);
+                        layout_video.setVisibility(View.GONE);
+                        image_layout.setVisibility(View.GONE);
+                    }
+                }else{
+                    File file = new File(url.get(i).substring(0,url.get(i).lastIndexOf("/")+1));
+                    if (tag.equals("IMG")) {
+                        setImage(imageView_src, f, file, url.get(i), download_img, image_size, progress_img);
+                        layout_video.setVisibility(View.GONE);
+                        audio_layout.setVisibility(View.GONE);
+                    } else if (tag.equals("VID")) {
+                        setVideo(layout_video, videoView, f, file, url.get(i), download_video, video_size, progress_video,play_video);
+                        image_layout.setVisibility(View.GONE);
+                        audio_layout.setVisibility(View.GONE);
+                    } else {
+                        setAudio(audio_play, audio_pause_download, seekBar, f, file, url.get(i), audio_size, progress_audio, download_audio);
+                        layout_video.setVisibility(View.GONE);
+                        image_layout.setVisibility(View.GONE);
+                    }
                 }
+                Log.e("Chatts_with flag","Flag = "+flag+" , file: "+f+" , "+url.get(i).substring(0,url.get(i).lastIndexOf("/")+1));
                 body_layout.setVisibility(View.GONE);
-
                 image_text.setText(word);
-                image_text.append(wordTwo);
                 image_text.append(wordTwo);
 
 
                 audio_text.setText(word);
                 audio_text.append(wordTwo);
-                audio_text.append(wordTwo);
+
 
                 video_text.setText(word);
                 video_text.append(wordTwo);
@@ -241,14 +283,13 @@ public class C_Adapter_Final extends ArrayAdapter<String> {
             } else {
                 layout_media.setVisibility(View.GONE);
                 audio_layout.setVisibility(View.GONE);
-
                 body_text.setText(word);
                 ///
                 body_text.append(wordTwo);
             }
-            Log.e("Chatt@2", "URL: " + file_image + "/" + f_n);
+            //Log.e("Chatt@2", "URL: " + file_image + "/" + f);
             try {
-                final String finalF_n = f_n;
+                //final String finalF_n = f_n;
 
                 // videoView.setVideoPath(file_image.getPath()+"/"+f_n);
                 if (message.get(i).equals("")) {
@@ -360,7 +401,6 @@ public class C_Adapter_Final extends ArrayAdapter<String> {
         if (!subfolder3.exists()) {
             subfolder3.mkdir();
         }
-
         File file1 = null;
         String targetFileName = "";
         String path = DIRECTORY_DOWNLOADS;
@@ -410,7 +450,7 @@ public class C_Adapter_Final extends ArrayAdapter<String> {
     }
 
 
-    public void setImage(final ImageView imageView, final String f, final File file, final String url, final ImageButton download_img, final TextView textView, final ProgressBar progressBar){
+    public void setImage(final ImageView imageView, final String f, final File file, final String url, final Button download_img, final TextView textView, final ProgressBar progressBar){
         File file1 = new File(file+"/"+f);
         if (file1.exists()){
             Log.e("CHATTSSS: ", "IMAGE PATH: " + file.getAbsolutePath() + "/" + f);
@@ -543,7 +583,7 @@ public class C_Adapter_Final extends ArrayAdapter<String> {
         }
     }
 
-    public void setVideo(final LinearLayout layout, final VideoView videioView, String f, File file, final String url, final ImageButton download_video, final TextView video_size, final ProgressBar progress_video){
+    public void setVideo(final LinearLayout layout, final VideoView videioView, String f, File file, final String url, final Button download_video, final TextView video_size, final ProgressBar progress_video,Button play_video){
 
         try {
             MediaPlayer mediaPlayer;
@@ -588,6 +628,7 @@ public class C_Adapter_Final extends ArrayAdapter<String> {
                 paths = file + "/" + f;
                 length = file1.length();
                 download_video.setVisibility(View.GONE);
+                play_video.setVisibility(View.VISIBLE);
             } else {
                 paths = url;
                 //URL url_ = new URL(url);
@@ -595,6 +636,7 @@ public class C_Adapter_Final extends ArrayAdapter<String> {
                 //urlConnection.connect();
                 ///ength = urlConnection.getContentLength();
                 download_video.setVisibility(View.VISIBLE);
+                play_video.setVisibility(View.GONE);
                 try {
                     URL pathss_url = new URL(url);
                     URLConnection conexion = pathss_url.openConnection();
@@ -643,6 +685,15 @@ public class C_Adapter_Final extends ArrayAdapter<String> {
                 }
             });
 
+            play_video.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, com.example.john.mobicare_uganda.firebase_collections.util.VideoPlayer.class);
+                    intent.putExtra("paths", finalPaths);
+                    context.startActivity(intent);
+                }
+            });
+
             boolean isdownloading = preferenceManager.getBoolean("isdownloading",false);
             if (isdownloading){
                 downloading = true;
@@ -651,14 +702,14 @@ public class C_Adapter_Final extends ArrayAdapter<String> {
                 downloading = false;
             }
             //// TODO: 10/24/17  register reciever...!
-            reg(progress_video,video_size,videioView,download_video);
+            reg(progress_video,video_size,videioView,download_video,play_video);
 
         }catch (Exception e){
             e.printStackTrace();
         }
     }
 
-    private void reg(final ProgressBar progress_video, final TextView video_size, final VideoView videioView, final ImageButton download_video ){
+    private void reg(final ProgressBar progress_video, final TextView video_size, final VideoView videioView, final Button download_video, final Button play_video){
         IntentFilter intentFilter
                 = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
         downloadReceiver = new BroadcastReceiver() {
@@ -696,6 +747,7 @@ public class C_Adapter_Final extends ArrayAdapter<String> {
                                     long leng = new File(path).length();
                                     video_size.setText(size(leng));
                                     download_video.setVisibility(View.GONE);
+                                    play_video.setVisibility(View.VISIBLE);
                               //  }
 
                             } catch (Exception e) {
@@ -711,20 +763,9 @@ public class C_Adapter_Final extends ArrayAdapter<String> {
             }
         };
         context.registerReceiver(downloadReceiver, intentFilter);
-        try{
-            context.unregisterReceiver(downloadReceiver2);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-        try{
-            context.unregisterReceiver(downloadReceiver3);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
     }
 
-    private void reg2(final ProgressBar progress_image, final TextView image_size, final ImageView imageView, final ImageButton download_image ){
+    private void reg2(final ProgressBar progress_image, final TextView image_size, final ImageView imageView, final Button download_image ){
 
         try{
             context.unregisterReceiver(downloadReceiver);
@@ -790,23 +831,6 @@ public class C_Adapter_Final extends ArrayAdapter<String> {
             }
         };
         context.registerReceiver(downloadReceiver2, intentFilter);
-        try{
-            context.unregisterReceiver(downloadReceiver);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-        try{
-            context.unregisterReceiver(downloadReceiver3);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-        try{
-            context.unregisterReceiver(downloadReceiver);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
 
     }
 
@@ -848,21 +872,7 @@ public class C_Adapter_Final extends ArrayAdapter<String> {
             }
         };
         context.registerReceiver(downloadReceiver3, intentFilter);
-
-        try{
-            context.unregisterReceiver(downloadReceiver);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-        try{
-            context.unregisterReceiver(downloadReceiver2);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
     }
-
-
     public String size(long size){
         String hrSize = "";
         try {
@@ -879,7 +889,7 @@ public class C_Adapter_Final extends ArrayAdapter<String> {
         }
         return hrSize;
     }
-    private void DownloadData(String url_path, final VideoView videoView, final TextView textView, final ImageButton download_video, final ProgressBar progress_video) {
+    private void DownloadData(String url_path, final VideoView videoView, final TextView textView, final Button download_video, final ProgressBar progress_video) {
 
         String PATH = Environment.getExternalStorageDirectory() + "/" + APP_FOLDER + "/";
         File folder = new File(PATH);
@@ -997,7 +1007,7 @@ public class C_Adapter_Final extends ArrayAdapter<String> {
     }
     //// TODO: 10/23/17
 
-    private void DownloadImage(String url_path, final ImageView imageView, final TextView textView, final ImageButton download_image, final ProgressBar progress_image) {
+    private void DownloadImage(String url_path, final ImageView imageView, final TextView textView, final Button download_image, final ProgressBar progress_image) {
 
         String PATH = Environment.getExternalStorageDirectory() + "/" + APP_FOLDER + "/";
         File folder = new File(PATH);
