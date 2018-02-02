@@ -17,8 +17,7 @@ import com.example.john.mobicare_uganda.dbsyncing.Appoitments;
 import java.util.ArrayList;
 import java.util.List;
 
-import adapters.Appoint_Lists;
-import adapters.Appointments_pat_list;
+import com.example.john.mobicare_uganda.adapters.Appointments_pat_list;
 import connectivity.Constants;
 import server_connections.Appointment_Operations;
 import users.Util;

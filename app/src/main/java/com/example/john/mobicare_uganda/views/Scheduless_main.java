@@ -1,27 +1,21 @@
 package com.example.john.mobicare_uganda.views;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.example.john.mobicare_uganda.R;
-import com.example.john.mobicare_uganda.dbsyncing.Appoitments;
-import com.example.john.mobicare_uganda.doctors.Appointments;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import adapters.Schedules;
-import adapters.schules_s;
-import connectivity.Constants;
+import com.example.john.mobicare_uganda.adapters.schules_s;
+
 import server_connections.Schedule_Operations;
 import users.Doctor_Details;
 import users.Util;

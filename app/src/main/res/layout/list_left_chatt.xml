@@ -256,8 +256,9 @@
                             android:layout_centerInParent="true"
                             android:id="@+id/download_video"
                             android:visibility="gone"
-                            android:hint="download"
-                            android:background="@drawable/round"
+                            android:text="download"
+                            android:textColor="@android:color/white"
+                            android:background="@null"
                             android:drawableLeft="@android:drawable/stat_sys_download"/>
 
                         <Button
@@ -265,8 +266,9 @@
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
                             android:id="@+id/play_video"
-                            android:hint="play"
-                            android:background="@drawable/round_null"
+                            android:text="play"
+                            android:background="@null"
+                            android:textColor="@android:color/white"
                             android:drawableLeft="@android:drawable/ic_media_play"/>
                     </RelativeLayout>
                 <TextView

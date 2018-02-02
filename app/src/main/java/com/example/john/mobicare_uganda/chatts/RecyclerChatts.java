@@ -74,7 +74,7 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import adapters.Chatt_List2;
+import com.example.john.mobicare_uganda.adapters.Chatt_List2;
 import connectivity.Constants;
 import connectivity.DBHelper;
 import server_connections.Doctor_Operations;

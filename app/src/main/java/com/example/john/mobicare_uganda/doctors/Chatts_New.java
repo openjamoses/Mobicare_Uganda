@@ -85,8 +85,8 @@ public class Chatts_New  extends AppCompatActivity {
     private FloatingActionButton fab;
     // private ProgressBar proogress_;
     //private TextView progresstext;
-    Bitmap bmp;
-    byte[] b;
+    //Bitmap bmp;
+    //byte[] b;
     String doctor_id;
     String category;
     private ImageView record_button;
@@ -135,11 +135,11 @@ public class Chatts_New  extends AppCompatActivity {
 
         phone_number = getIntent().getStringExtra("number");
         Bundle extras = getIntent().getExtras();
-        b = extras.getByteArray("image");
+        //b = extras.getByteArray("image");
 
         doctor_id = new Doctor_Details(context).getDoctor_id();
         //category = getIntent().getStringExtra("category");
-        bmp = BitmapFactory.decodeByteArray(b, 0, b.length);
+        //bmp = BitmapFactory.decodeByteArray(b, 0, b.length);
 
         //Log.e(TAG,"DOCTOR: "+doctor_id+" CATEGORY: "+category+" PHONE: "+phone_number);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -631,6 +631,7 @@ public class Chatts_New  extends AppCompatActivity {
                         String date = new Get_CurrentDateTime().getCurrentDate();
                         String time = new Get_CurrentDateTime().getCurrentTime();
 
+                        doctor_id = new Doctor_Details(context).getDoctor_id();
                         new Messages_Syncing(context).send(date,time,phone_number,messages,voiceStoragePath,Integer.parseInt(doctor_id),Integer.parseInt(category),type);
                         alert.dismiss();
                         new Handler().postDelayed(new Runnable() {

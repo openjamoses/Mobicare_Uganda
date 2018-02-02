@@ -1,4 +1,4 @@
-package adapters;
+package com.example.john.mobicare_uganda.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;

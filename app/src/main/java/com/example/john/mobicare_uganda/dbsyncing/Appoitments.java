@@ -26,10 +26,13 @@ import java.util.Map;
 import connectivity.Constants;
 import connectivity.DBHelper;
 import connectivity.Get_CurrentDateTime;
+import server_connections.Doctor_Operations;
 import server_connections.Image_Operations;
 import users.CurrentDoctor;
 import users.CurrentUser;
+import users.Dialog_Message;
 import users.Doctor_Details;
+import users.Set_Alarm;
 import users.User_Details;
 
 import static connectivity.Constants.config.APPOINTMENT_BODY;
@@ -257,7 +260,22 @@ public class Appoitments {
                             String img_url = new Image_Operations(context).image( new CurrentUser(context).current());
                             new SendNotification(context).sendSinglePush_Doctor(names+":users:"+phone,body,img_url, String.valueOf(doctor_id));
                         }
-                        save_appointments(date,time,day,doctor_id,category,phone,body,status);
+                        String message = save_appointments(date,time,day,doctor_id,category,phone,body,status);
+                        if (message.equals("Appointment Scheduled!")){
+                            new Dialog_Message(context).showDialog("Appointment",
+                                    "Your Appointment has been Scheduled Successfully, "+new Doctor_Operations(context).getNames(Integer.parseInt(doctor_id)) +" Will now Check your appointment and get back to you Shortly..!!");
+
+                            try{
+                                String[] splits = date.split("-");
+                                String[] splits2 = time.split(":");
+                                new Set_Alarm(context).setAlarm( Integer.parseInt(splits[0]),Integer.parseInt(splits[1]),Integer.parseInt(splits[2]),Integer.parseInt(splits2[0]), Integer.parseInt(splits2[1]));
+
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
+
+                        }
+
 
                         try {
                             progressDialog.dismiss();

@@ -64,7 +64,7 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import adapters.MyListAdapter;
+import com.example.john.mobicare_uganda.adapters.MyListAdapter;
 import connectivity.Constants;
 import connectivity.DBHelper;
 import connectivity.Get_CurrentDateTime;
@@ -99,8 +99,8 @@ public class Chatts_Tests  extends AppCompatActivity {
     private FloatingActionButton fab;
    // private ProgressBar proogress_;
     //private TextView progresstext;
-    Bitmap bmp;
-    byte[] b;
+    //Bitmap bmp;
+    //byte[] b;
     String doctor_id;
     String category;
     private ImageView record_button;
@@ -149,11 +149,11 @@ public class Chatts_Tests  extends AppCompatActivity {
 
         phone_number = new User_Details(context).getContact();
         Bundle extras = getIntent().getExtras();
-        b = extras.getByteArray("image");
+        //b = extras.getByteArray("image");
 
         doctor_id = getIntent().getStringExtra("id");
         category = getIntent().getStringExtra("category");
-        bmp = BitmapFactory.decodeByteArray(b, 0, b.length);
+        //bmp = BitmapFactory.decodeByteArray(b, 0, b.length);
 
         Log.e(TAG,"DOCTOR: "+doctor_id+" CATEGORY: "+category+" PHONE: "+phone_number);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -853,7 +853,7 @@ public class Chatts_Tests  extends AppCompatActivity {
                             final String[] finalDates = dates;
                             String mode = "users";
                             //Log.e(TAG,"Total messages: "+body_l.size()+"\t Dates: "+date_l.size()+" \t URL: "+url_l.size());
-                            MyListAdapter listAdapter = new MyListAdapter(Chatts_Tests.this, finalBody, finalDates, finalLg,bmp, finalUrl,mode);
+                            MyListAdapter listAdapter = new MyListAdapter(Chatts_Tests.this, finalBody, finalDates, finalLg, finalUrl,mode);
                             //Chatt_List2 chatts_list = new Chatt_List2(context, finalBody, finalDates, finalLg,bmp, finalUrl,mode);
                             listAdapter.notifyDataSetChanged();
                             listView.setAdapter(listAdapter);

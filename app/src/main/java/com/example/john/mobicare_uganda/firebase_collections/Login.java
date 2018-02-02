@@ -13,14 +13,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.john.mobicare_uganda.MainActivity;
 import com.example.john.mobicare_uganda.R;
 import com.example.john.mobicare_uganda.dbsyncing.Password;
-import com.example.john.mobicare_uganda.doctors.Login_Activity;
 import com.example.john.mobicare_uganda.doctors.MainActivity_Doctor;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -49,7 +47,7 @@ public class Login extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.email_logn_activity);
+        setContentView(R.layout.phone_logn_activity);
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
 

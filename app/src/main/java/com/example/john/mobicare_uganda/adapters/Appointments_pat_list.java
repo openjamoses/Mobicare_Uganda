@@ -1,17 +1,9 @@
-package adapters;
+package com.example.john.mobicare_uganda.adapters;
 
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
-import android.support.v4.content.res.ResourcesCompat;
-import android.support.v7.app.AlertDialog;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
@@ -22,21 +14,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.ToggleButton;
 
 import com.example.john.mobicare_uganda.R;
-import com.example.john.mobicare_uganda.firebase_collections.util.Convert;
 
 import java.util.List;
-
-import connectivity.DBHelper;
-import server_connections.Fetch;
-import server_connections.Updates;
-
-import static connectivity.Constants.config.APPOINTMENT_DOCTOR_URL;
-import static connectivity.Constants.config.OPERATION_APPOINTMENT;
-import static connectivity.Constants.config.OPERATION_DOCTORS;
-import static connectivity.Constants.config.UPDATE_APPOINTMENTS_DOCTOR_URL;
 
 /**
  * Created by john on 10/6/17.

@@ -39,6 +39,7 @@ import java.util.List;
 
 import connectivity.Get_CurrentDateTime;
 import server_connections.Doctor_Operations;
+import users.Dialog_Message;
 import users.User_Details;
 
 /**
@@ -283,9 +284,9 @@ public class Scheduler_1 extends AppCompatActivity {
                     try{
                         String[] splits = date.split("-");
                         String[] splits2 = ss.split(":");
-                        setAlarm( Integer.parseInt(splits[0]),Integer.parseInt(splits[1]),Integer.parseInt(splits[2]),Integer.parseInt(splits2[0]), Integer.parseInt(splits2[1]));
                         alert.dismiss();
-                        finish();
+
+                          //finish();
                     }catch (Exception e){
                         e.printStackTrace();
                     }

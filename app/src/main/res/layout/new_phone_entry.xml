@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:background="@drawable/bg"
+        android:layout_height="wrap_content"
+        android:padding="20sp"
+        android:orientation="vertical">
+
+        <include layout="@layout/header"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40sp"
+            android:orientation="vertical">
+            <net.rimoto.intlphoneinput.IntlPhoneInput
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20sp"
+                app:textSize="14sp"
+                app:textColor="#000000"
+                app:flagPaddingBottom="4dp"
+                app:flagPaddingEnd="4dp"
+                android:layout_gravity="center"
+                app:flagPaddingStart="4dp"
+                app:flagPaddingTop="4dp"
+                android:id="@+id/my_phone_input" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textColor="@color/colorAccent"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:layout_marginTop="40sp"
+                android:id="@+id/create_text"
+                android:text="@string/donot_have_account"/>
+
+            <Button
+                android:id="@+id/button_start_verification"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20sp"
+                android:layout_gravity="right"
+                android:text="@string/next"
+                android:background="@drawable/round"
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+
+
+</LinearLayout>

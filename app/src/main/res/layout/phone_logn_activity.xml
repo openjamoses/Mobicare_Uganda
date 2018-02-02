@@ -18,6 +18,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="@dimen/activity_horizontal_margin"
             android:orientation="vertical">
 
             <include layout="@layout/header"/>
@@ -26,19 +27,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20sp"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Sign in Using Email Address"
+                android:text="Provide your Password"
                 android:id="@+id/textView"
                 android:layout_gravity="center_horizontal" />
 
             <EditText
                 android:id="@+id/editTextEmail"
+                android:layout_marginTop="20sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:hint="Enter email"
+                android:hint="Username"
+                android:enabled="false"
+                android:drawableLeft="@android:drawable/ic_menu_call"
+                android:background="@drawable/round"
                 android:inputType="textEmailAddress" />
 
             <EditText
@@ -48,6 +52,8 @@
                 android:layout_margin="15dp"
                 android:layout_gravity="center"
                 android:hint="Enter password"
+                android:drawableLeft="@android:drawable/ic_lock_idle_lock"
+                android:background="@drawable/round"
                 android:gravity="center"
                 android:inputType="textPassword" />
 
@@ -67,7 +73,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
-                android:background="@drawable/rounded_blank"
                 android:text="Signup" />
 
             <TextView
@@ -75,6 +80,7 @@
                 android:id="@+id/textViewSignUp"
                 android:textAlignment="center"
                 android:layout_margin="15dp"
+                android:visibility="invisible"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
